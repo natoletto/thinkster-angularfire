@@ -22,13 +22,24 @@ angular
       })
       .state('login', {
         url: '/login',
+        controller: 'AuthCtrl as authCtrl',
         templateUrl: 'auth/login.html'
       })
       .state('register', {
         url: '/register',
+        controller: 'AuthCtrl as authCtrl',
         templateUrl: 'auth/register.html'
       });
 
     $urlRouterProvider.otherwise('/');
   })
-  .constant('FirebaseUrl', 'https://slack.firebaseio.com/');
+  .constant('FirebaseUrl', 'https://slack.firebaseio.com/')
+  .config(function(){
+    var config = {
+      apiKey: "AIzaSyAGftWOQ3AuboJ2FSztVFEcUXjV1CZHdLI",
+      authDomain: "thinkster-angularfire.firebaseapp.com",
+      databaseURL: "https://thinkster-angularfire.firebaseio.com",
+      storageBucket: "thinkster-angularfire.appspot.com",
+      messagingSenderId: "568558983844"
+    }
+  });
