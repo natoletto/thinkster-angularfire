@@ -23,17 +23,34 @@ angular
       .state('login', {
         url: '/login',
         controller: 'AuthCtrl as authCtrl',
-        templateUrl: 'auth/login.html'
+        templateUrl: 'auth/login.html',
+        resolve: {
+          requireNoAuth: function($state, Auth) {
+            return Auth.$requireSignIn().then(function(auth) {
+              $state.go('home');
+            }, function (error) {
+              return;
+            });
+          }
+        }
       })
       .state('register', {
         url: '/register',
         controller: 'AuthCtrl as authCtrl',
-        templateUrl: 'auth/register.html'
+        templateUrl: 'auth/register.html',
+        resolve: {
+          requireNoAuth: function($state, Auth) {
+            return Auth.$requireSignIn().then(function(auth) {
+              $state.go('home');
+            }, function (error) {
+              return;
+            });
+          }
+        }
       });
 
     $urlRouterProvider.otherwise('/');
   })
-  .constant('FirebaseUrl', 'https://slack.firebaseio.com/')
   .config(function(){
     var config = {
       apiKey: "AIzaSyAGftWOQ3AuboJ2FSztVFEcUXjV1CZHdLI",
@@ -41,5 +58,7 @@ angular
       databaseURL: "https://thinkster-angularfire.firebaseio.com",
       storageBucket: "thinkster-angularfire.appspot.com",
       messagingSenderId: "568558983844"
-    }
+    };
+    
+    firebase.initializeApp(config);
   });
